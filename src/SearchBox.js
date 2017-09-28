@@ -8,11 +8,13 @@ class SearchBox extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleKeywordChange = this.handleKeywordChange.bind(this);
     this.state = {
       searchValue: '',
+      keyword: '',
       range: 10,
-      results: [{name: "sammy"}]
+      results: []
     }
     geolocator.config({
         language: "en",
@@ -24,8 +26,11 @@ class SearchBox extends Component {
   }
 
 //Activate when the form is changed, setting the searchvalue
-  handleChange(event) {
+  handleSearchChange(event) {
     this.setState({searchValue: event.target.value});
+  }
+  handleKeywordChange(event) {
+    this.setState({keyword: event.target.value});
   }
 
 //activate when the form is submitted
@@ -46,7 +51,7 @@ class SearchBox extends Component {
         var request = {
           location: new window.google.maps.LatLng(lat,lon),
           radius: this.state.range*1000,
-          type: ['restaurant']
+          keyword: this.state.keyword
         };
         //the request gets sent to the places API
         service.nearbySearch(request, function(results, status){
@@ -68,9 +73,15 @@ class SearchBox extends Component {
       <form onSubmit={this.handleSubmit}>
         <input
         type="text"
-        placeholder="Search..."
+        placeholder="Location"
         value={this.state.searchValue}
-        onChange={this.handleChange}
+        onChange={this.handleSearchChange}
+        />
+        <input
+        type="text"
+        placeholder="Keyword"
+        value={this.state.keyword}
+        onChange={this.handleKeywordChange}
         />
         <Slider
         value={this.state.range}
