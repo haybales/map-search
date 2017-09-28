@@ -37,12 +37,15 @@ class SearchBox extends Component {
         lon = location.coords.longitude;
         var request = {
           location: new window.google.maps.LatLng(lat,lon),
-          radius: '500',
+          radius: '100000',
           type: ['restaurant']
         };
 
         service.nearbySearch(request, function(results, status){
           this.setState({results: results});
+          console.log(results[0])
+          this.props.resulthandler(results, [lat, lon]);
+          this.props.thePan([lat, lon]);
         }.bind(this));
       }
     }.bind(this));

@@ -1,31 +1,51 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
+import latlng from 'leaflet';
 
 
 class MapView extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.activatePan = this.activatePan.bind(this);
+    this.props.assignPan(this.activatePan);
     this.state = {
-      lat: 51.505,
-      lng: -0.09,
+      lat: this.props.location[0],
+      lng: this.props.location[1],
       zoom: 13,
     };
   }
 
+  activatePan(location) {
+    const map = this.refs.map.leafletElement;
+    map.panTo({lat: location[0], lng: location[1]});
+  }
+
+
   render() {
-    const position = [this.state.lat, this.state.lng];
+    var position = [this.state.lat, this.state.lng];
+
+
     return (
-      <Map center={position} zoom={this.state.zoom} zoomControl={false} attributionControl={false}>
+      <Map ref='map' center={position} zoom={this.state.zoom} zoomControl={false} attributionControl={false}>
       <ZoomControl position="bottomleft" />
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
-        <Marker position={position}>
-          <Popup>
-            <span>A test marker. <br/> Easily customizable.</span>
-          </Popup>
-        </Marker>
+        {this.props.results.map(function(x){
+          return(
+            <Marker position={[x.geometry.location.lat(), x.geometry.location.lng()]}>
+              <Popup>
+                <p>
+                  <strong>{x.name}</strong><br/>
+                  {x.vicinity}
+                </p>
+              </Popup>
+            </Marker>
+          )
+        })}
+
       </Map>
 
     );
