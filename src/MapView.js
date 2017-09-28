@@ -6,8 +6,9 @@ import latlng from 'leaflet';
 class MapView extends Component {
   constructor(props) {
     super(props);
-
+    //make sure the panning function has the right 'this'
     this.activatePan = this.activatePan.bind(this);
+    //call the prop function to assign the pan function up into the App state so the searchbox can grab it
     this.props.assignPan(this.activatePan);
     this.state = {
       lat: this.props.location[0],
@@ -16,9 +17,14 @@ class MapView extends Component {
     };
   }
 
-  activatePan(location) {
+//reference the map and fly to a location
+  activatePan(results) {
     const map = this.refs.map.leafletElement;
-    map.panTo({lat: location[0], lng: location[1]});
+    var resultlocs=[];
+    for(var i=0;i<results.length;i++){
+      resultlocs[i]=[results[i].geometry.location.lat(), results[i].geometry.location.lng()];
+    }
+    map.fitBounds(resultlocs);
   }
 
 
