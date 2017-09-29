@@ -31,6 +31,10 @@ class MapView extends Component {
 
   setRender(x, index){
     let opacity=0.4;
+    let business="closed now";
+    if(x.opening_hours.open_now){
+      business="currently open"
+    }
     if(this.props.focus===x.place_id){
       opacity=1;
     }
@@ -43,8 +47,9 @@ class MapView extends Component {
       >
         <Popup>
           <p>
-            <strong>{x.name}</strong><br/>
-            {x.vicinity}
+            <strong>{x.name}</strong><br />
+            {x.vicinity}<br />
+            <i>{business}</i>
           </p>
         </Popup>
       </Marker>
