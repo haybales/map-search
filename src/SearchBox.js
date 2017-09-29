@@ -135,7 +135,7 @@ class Result extends Component {
       );
     }else{
       return (
-        <div className="resultbox" onClick={function(){this.props.setFocus(this.props.xid)}, this}>
+        <div className="resultbox" onClick={function(){this.props.setFocus(this.props.xid)}.bind(this)}>
           <strong>{name}</strong> - <span>{type}</span><p>{desc}</p>
         </div>
       );

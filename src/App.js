@@ -26,7 +26,6 @@ class App extends Component {
       results: res,
       location: location
     });
-    console.log("app results updated.")
   }
 
   getPan(pan){
@@ -35,13 +34,12 @@ class App extends Component {
 
   setFocus(id){
     this.setState({focus: id});
-    console.log("focus set:"+id);
   }
 
   render() {
     return (
       <div className="wrapper">
-        <MapView results={this.state.results} location={this.state.location} assignPan={this.getPan}/>
+        <MapView results={this.state.results} location={this.state.location} assignPan={this.getPan} setFocus={this.setFocus} focus={this.state.focus}/>
         <SearchBox resulthandler={this.handleNewResults} thePan={this.state.pan} setFocus={this.setFocus} focus={this.state.focus}/>
       </div>
     );

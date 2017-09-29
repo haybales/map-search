@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
-import latlng from 'leaflet';
+import { divIcon } from 'leaflet';
 
 
 class MapView extends Component {
+
   constructor(props) {
     super(props);
     //make sure the panning function has the right 'this'
@@ -17,6 +18,7 @@ class MapView extends Component {
     };
   }
 
+
 //reference the map and fly to a location
   activatePan(results) {
     const map = this.refs.map.leafletElement;
@@ -27,11 +29,32 @@ class MapView extends Component {
     map.fitBounds(resultlocs, {padding: [50, 50]});
   }
 
+  setRender(x, index){
+    let opacity=0.4;
+    if(this.props.focus===x.place_id){
+      opacity=1;
+    }
+    return(
+      <Marker
+        position={[x.geometry.location.lat(), x.geometry.location.lng()]}
+        onClick={function(){this.props.setFocus(x.place_id)}.bind(this)}
+        key={index}
+        opacity={opacity}
+      >
+        <Popup>
+          <p>
+            <strong>{x.name}</strong><br/>
+            {x.vicinity}
+          </p>
+        </Popup>
+      </Marker>
+    )
+
+  }
+
 
   render() {
     var position = [this.state.lat, this.state.lng];
-
-
     return (
       <Map ref='map' center={position} zoom={this.state.zoom} zoomControl={false} attributionControl={false}>
       <ZoomControl position="bottomleft" />
@@ -40,18 +63,7 @@ class MapView extends Component {
           id='mapbox.streets'
           url='https://api.mapbox.com/styles/v1/haybales/cj8560gz21enx2rqtyytdijos/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGF5YmFsZXMiLCJhIjoiY2o4NTV5NWMxMGhjaDMyb2EzZW5vZm04aiJ9.TcLW3YoxL6ELLYAGKNOvpg'
         />
-        {this.props.results.map(function(x){
-          return(
-            <Marker position={[x.geometry.location.lat(), x.geometry.location.lng()]}>
-              <Popup>
-                <p>
-                  <strong>{x.name}</strong><br/>
-                  {x.vicinity}
-                </p>
-              </Popup>
-            </Marker>
-          )
-        })}
+        {this.props.results.map(this.setRender.bind(this))}
 
       </Map>
 
