@@ -8,9 +8,13 @@ class App extends Component {
     super(props);
     this.handleNewResults=this.handleNewResults.bind(this);
     this.getPan=this.getPan.bind(this);
+
+    var lat=37.7749;
+    var lon=-122.4194;
+
     this.state={
       results: [],
-      location: [54.18815548107151, -7.657470703124999],
+      location: [lat, lon],
       pan: null
     }
   }

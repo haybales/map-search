@@ -10,12 +10,14 @@ class SearchBox extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
+
     this.state = {
-      searchValue: '',
+      searchValue: 'San Francisco',
       keyword: '',
       range: 10,
       results: []
     }
+
     geolocator.config({
         language: "en",
         google: {
@@ -23,6 +25,8 @@ class SearchBox extends Component {
             key: "AIzaSyBrLxlfWBEnisKWdAfPaxd7WlJMpvpl4R8"
         }
     });
+
+
   }
 
 //Activate when the form is changed, setting the searchvalue
@@ -40,7 +44,7 @@ class SearchBox extends Component {
     event.preventDefault();
     //dummy div for the google maps service, since not actually using google maps
     var service = new window.google.maps.places.PlacesService(document.createElement('div'));
-    //use geolocatior package to get the lat+long of searched value
+    //use geolocator package to get the lat+long of searched value
     geolocator.geocode(this.state.searchValue, function (err, location) {
       if(err){
         alert(err)
@@ -88,13 +92,13 @@ class SearchBox extends Component {
         orientation="horizontal"
         max={50}
         onChange={value => this.setState({ range: value })}
-        /><span className="range">{this.state.range} km</span>
+        /><span className="range">Range: {this.state.range} km</span>
         <input type="submit" value="Submit" />
       </form>
 
       <div className="resultsbox">
         {this.state.results.map(function(x){
-          return <Result name={x.name} desc={x.vicinity} />
+          return <Result className="resultbox" name={x.name} desc={x.vicinity} type={x.types[0]} />
         })}
       </div>
       </div>
@@ -109,9 +113,11 @@ class Result extends Component {
   render() {
     const name = this.props.name;
     const desc = this.props.desc;
+    //replace the underscores so it looks better.
+    const type = this.props.type.replace(/_/g, " ");
     return (
       <div className="resultbox">
-        <strong>{name}</strong><p>{desc}</p>
+        <strong>{name}</strong> - <span>{type}</span><p>{desc}</p>
       </div>
     );
   }

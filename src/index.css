@@ -1,7 +1,9 @@
+*{box-sizing: border-box;}
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Helvetica', sans-serif;
+
 }
 .leaflet-container{
   position: absolute;
@@ -15,8 +17,54 @@ body {
 
 .searchbox{
   position: absolute;
-  top: 5px;
-  left: 5px;
+  display: flex;
+  flex-direction: column;
+  top: 1rem;
+  left: 1rem;
+  width: 300px;
+  height: 70%;
+  padding-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
+}
 
-  background: #333;
+.searchbox form{
+  padding: 1rem;
+}
+.searchbox form input{
+  width: 100%;
+  margin-bottom: 0.2rem;
+  padding: 0.5rem;
+  font-size: 16px;
+  border: 1px dotted #777;
+  border-radius: 3px;
+}
+
+.resultsbox{
+  width: 100%;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.resultbox{
+  border-bottom: 1px dotted #777;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+.resultbox p{
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  padding: 0;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #333;
+}
+
+.range{
+  display: block;
+  font-size: 0.8rem;
+  font-style: italic;
+  text-align: center;
+  margin: 1rem;
 }

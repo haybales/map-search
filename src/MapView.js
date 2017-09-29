@@ -24,7 +24,7 @@ class MapView extends Component {
     for(var i=0;i<results.length;i++){
       resultlocs[i]=[results[i].geometry.location.lat(), results[i].geometry.location.lng()];
     }
-    map.fitBounds(resultlocs);
+    map.fitBounds(resultlocs, {padding: [50, 50]});
   }
 
 
@@ -37,7 +37,8 @@ class MapView extends Component {
       <ZoomControl position="bottomleft" />
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+          id='mapbox.streets'
+          url='https://api.mapbox.com/styles/v1/haybales/cj8560gz21enx2rqtyytdijos/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGF5YmFsZXMiLCJhIjoiY2o4NTV5NWMxMGhjaDMyb2EzZW5vZm04aiJ9.TcLW3YoxL6ELLYAGKNOvpg'
         />
         {this.props.results.map(function(x){
           return(
