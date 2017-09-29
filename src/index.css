@@ -48,7 +48,7 @@ body {
 
 .resultbox{
   border-bottom: 1px dotted #777;
-  margin-top: 1rem;
+  padding-top: 1rem;
   margin-right: 1rem;
   margin-left: 1rem;
 }

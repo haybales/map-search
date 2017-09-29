@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Result from './Result'
 import geolocator from 'geolocator';
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
@@ -75,6 +76,7 @@ class SearchBox extends Component {
   render(){
     return(
       <div className="searchbox">
+
         <form onSubmit={this.handleSubmit}>
           <input
           type="text"
@@ -84,7 +86,7 @@ class SearchBox extends Component {
           />
           <input
           type="text"
-          placeholder="Keyword"
+          placeholder="Enter a seach term..."
           value={this.state.keyword}
           onChange={this.handleKeywordChange}
           />
@@ -109,45 +111,14 @@ class SearchBox extends Component {
               setFocus={this.props.setFocus}
               focus={this.props.focus}
               />)
-          }, this)}
+          }.bind(this))}
         </div>
+
       </div>
     )
   }
 }
 
-class Result extends Component {
-  constructor(props) {
-    super(props);
-  }
 
-  setRender(){
-    const name = this.props.name;
-    const desc = this.props.desc;
-    //replace the underscores so it looks better.
-    const type = this.props.type.replace(/_/g, " ");
-    //decide if the selection is focussed
-    if(this.props.focus===this.props.xid){
-      return (
-        <div className="resultbox focussed" onClick={function(){this.props.setFocus(this.props.xid)}.bind(this)}>
-          <strong>{name}</strong> - <span>{type}</span><p>{desc}</p>
-        </div>
-      );
-    }else{
-      return (
-        <div className="resultbox" onClick={function(){this.props.setFocus(this.props.xid)}.bind(this)}>
-          <strong>{name}</strong> - <span>{type}</span><p>{desc}</p>
-        </div>
-      );
-    }
-  }
-
-  render() {
-
-    return (
-      this.setRender()
-    );
-  }
-}
 
 export default SearchBox;
