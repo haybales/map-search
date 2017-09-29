@@ -71,36 +71,46 @@ class SearchBox extends Component {
 
   }
 
+
   render(){
     return(
       <div className="searchbox">
-      <form onSubmit={this.handleSubmit}>
-        <input
-        type="text"
-        placeholder="Location"
-        value={this.state.searchValue}
-        onChange={this.handleSearchChange}
-        />
-        <input
-        type="text"
-        placeholder="Keyword"
-        value={this.state.keyword}
-        onChange={this.handleKeywordChange}
-        />
-        <Slider
-        value={this.state.range}
-        orientation="horizontal"
-        max={50}
-        onChange={value => this.setState({ range: value })}
-        /><span className="range">Range: {this.state.range} km</span>
-        <input type="submit" value="Submit" />
-      </form>
+        <form onSubmit={this.handleSubmit}>
+          <input
+          type="text"
+          placeholder="Location"
+          value={this.state.searchValue}
+          onChange={this.handleSearchChange}
+          />
+          <input
+          type="text"
+          placeholder="Keyword"
+          value={this.state.keyword}
+          onChange={this.handleKeywordChange}
+          />
+          <Slider
+          value={this.state.range}
+          orientation="horizontal"
+          max={50}
+          onChange={value => this.setState({ range: value })}
+          /><span className="range">Range: {this.state.range} km</span>
+          <input type="submit" value="Submit" />
+        </form>
 
-      <div className="resultsbox">
-        {this.state.results.map(function(x){
-          return <Result className="resultbox" name={x.name} desc={x.vicinity} type={x.types[0]} />
-        })}
-      </div>
+        <div className="resultsbox" >
+          {this.state.results.map(function(x, index){
+            return(<Result
+              className="resultbox"
+              name={x.name}
+              key={index}
+              desc={x.vicinity}
+              type={x.types[0]}
+              xid={x.place_id}
+              setFocus={this.props.setFocus}
+              focus={this.props.focus}
+              />)
+          }, this)}
+        </div>
       </div>
     )
   }
@@ -110,15 +120,32 @@ class Result extends Component {
   constructor(props) {
     super(props);
   }
-  render() {
+
+  setRender(){
     const name = this.props.name;
     const desc = this.props.desc;
     //replace the underscores so it looks better.
     const type = this.props.type.replace(/_/g, " ");
+    //decide if the selection is focussed
+    if(this.props.focus===this.props.xid){
+      return (
+        <div className="resultbox focussed" onClick={function(){this.props.setFocus(this.props.xid)}.bind(this)}>
+          <strong>{name}</strong> - <span>{type}</span><p>{desc}</p>
+        </div>
+      );
+    }else{
+      return (
+        <div className="resultbox" onClick={function(){this.props.setFocus(this.props.xid)}, this}>
+          <strong>{name}</strong> - <span>{type}</span><p>{desc}</p>
+        </div>
+      );
+    }
+  }
+
+  render() {
+
     return (
-      <div className="resultbox">
-        <strong>{name}</strong> - <span>{type}</span><p>{desc}</p>
-      </div>
+      this.setRender()
     );
   }
 }

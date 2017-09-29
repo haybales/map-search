@@ -68,3 +68,7 @@ body {
   text-align: center;
   margin: 1rem;
 }
+
+.focussed{
+  background: #F0E0E0;
+}

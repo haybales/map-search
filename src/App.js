@@ -8,6 +8,7 @@ class App extends Component {
     super(props);
     this.handleNewResults=this.handleNewResults.bind(this);
     this.getPan=this.getPan.bind(this);
+    this.setFocus=this.setFocus.bind(this);
 
     var lat=37.7749;
     var lon=-122.4194;
@@ -15,7 +16,8 @@ class App extends Component {
     this.state={
       results: [],
       location: [lat, lon],
-      pan: null
+      pan: null,
+      focus: null
     }
   }
 
@@ -31,11 +33,16 @@ class App extends Component {
     this.setState({pan: pan});
   }
 
+  setFocus(id){
+    this.setState({focus: id});
+    console.log("focus set:"+id);
+  }
+
   render() {
     return (
       <div className="wrapper">
         <MapView results={this.state.results} location={this.state.location} assignPan={this.getPan}/>
-        <SearchBox resulthandler={this.handleNewResults} thePan={this.state.pan}/>
+        <SearchBox resulthandler={this.handleNewResults} thePan={this.state.pan} setFocus={this.setFocus} focus={this.state.focus}/>
       </div>
     );
   }
