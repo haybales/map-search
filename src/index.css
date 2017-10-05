@@ -51,6 +51,8 @@ body {
   padding-top: 1rem;
   margin-right: 1rem;
   margin-left: 1rem;
+  border-radius: 3px;
+  padding-left: 1em;
 }
 .resultbox p{
   margin-top: 0.3rem;
