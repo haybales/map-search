@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
-import { divIcon } from 'leaflet';
 
 
 class MapView extends Component {
