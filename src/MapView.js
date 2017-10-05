@@ -21,19 +21,25 @@ class MapView extends Component {
 
 //reference the map and fly to a location
   activatePan(results) {
-    const map = this.refs.map.leafletElement;
-    var resultlocs=[];
-    for(var i=0;i<results.length;i++){
-      resultlocs[i]=[results[i].geometry.location.lat(), results[i].geometry.location.lng()];
+    if(results.length>0){
+      const map = this.refs.map.leafletElement;
+      var resultlocs=[];
+      for(var i=0;i<results.length;i++){
+        resultlocs[i]=[results[i].geometry.location.lat(), results[i].geometry.location.lng()];
+      }
+      map.fitBounds(resultlocs, {padding: [50, 50]});
     }
-    map.fitBounds(resultlocs, {padding: [50, 50]});
   }
 
   setRender(x, index){
     let opacity=0.4;
-    let business="closed now";
-    if(x.opening_hours.open_now){
-      business="currently open"
+    let business="";
+    if(x.opening_hours){
+      if(x.opening_hours.open_now){
+        business="currently open"
+      }else{
+        business="closed now"
+      }
     }
     if(this.props.focus===x.place_id){
       opacity=1;
