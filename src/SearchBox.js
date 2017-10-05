@@ -99,7 +99,12 @@ class SearchBox extends Component {
           <input type="submit" value="Submit" />
         </form>
 
-        <ResultsBox results={this.state.results} initialState={this.state.initialState} />
+        <ResultsBox
+          results={this.state.results}
+          initialState={this.state.initialState}
+          setFocus={this.props.setFocus}
+          focus={this.props.focus}
+        />
 
       </div>
     )
