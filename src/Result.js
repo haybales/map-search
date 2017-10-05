@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 function Result(props){
 
@@ -13,7 +13,7 @@ function Result(props){
     classes+=" focussed"
   }
   return (
-    <div className={classes} onClick={function(){props.setFocus(props.xid)}.bind(this)}>
+    <div className={classes} onClick={function(){props.setFocus(props.xid)}}>
       <strong>{name}</strong> - <span>{type}</span><p>{desc}</p>
     </div>
   );

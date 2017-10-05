@@ -3,11 +3,6 @@ import Result from './Result'
 
 class ResultsBox extends Component {
 
-  constructor(props) {
-    super(props);
-
-  }
-
   renderResults(results, initialState){
     if(initialState){
       return(
