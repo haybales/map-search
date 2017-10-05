@@ -74,3 +74,14 @@ body {
 .focussed{
   background: #E0E0F0;
 }
+
+.initialState, .notFound{
+  text-align: center;
+  font-style: italic;
+  color: #777;
+  margin-top: 0.5em;
+}
+
+.notFound{
+  color: #C77;
+}

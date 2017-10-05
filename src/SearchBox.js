@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Result from './Result'
+import ResultsBox from './ResultsBox'
 import geolocator from 'geolocator';
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
@@ -16,7 +16,8 @@ class SearchBox extends Component {
       searchValue: 'San Francisco',
       keyword: '',
       range: 10,
-      results: []
+      results: [],
+      initialState: true
     }
 
     geolocator.config({
@@ -60,8 +61,7 @@ class SearchBox extends Component {
         };
         //the request gets sent to the places API
         service.nearbySearch(request, function(results, status){
-          this.setState({results: results});
-          console.log(results[0])
+          this.setState({results: results, initialState: false});
           //handle use the App result handler to transfer the results to the Map
           this.props.resulthandler(results, [lat, lon]);
           //Use the pan to pass the lat+long to the map moving method on the leaflet map reference
@@ -99,20 +99,7 @@ class SearchBox extends Component {
           <input type="submit" value="Submit" />
         </form>
 
-        <div className="resultsbox" >
-          {this.state.results.map(function(x, index){
-            return(<Result
-              className="resultbox"
-              name={x.name}
-              key={index}
-              desc={x.vicinity}
-              type={x.types[0]}
-              xid={x.place_id}
-              setFocus={this.props.setFocus}
-              focus={this.props.focus}
-              />)
-          }.bind(this))}
-        </div>
+        <ResultsBox results={this.state.results} initialState={this.state.initialState} />
 
       </div>
     )
